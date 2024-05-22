@@ -1,30 +1,30 @@
-import * as THREE from 'three'
-import './style.css'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import gsap from "gsap"
+import * as THREE from 'https://unpkg.com/three@0.164.1/build/three.module.js';
+import './style.css';
+import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js';
+import gsap from 'gsap';
 
 // Scene
-const scene = new THREE.Scene()
+const scene = new THREE.Scene();
 
 // Sizes
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
-}
+};
 
 // Camera
-const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 20
-scene.add(camera)
+const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100);
+camera.position.z = 20;
+scene.add(camera);
 
 // Renderer
-const canvas = document.querySelector(".webgl")
-const renderer = new THREE.WebGLRenderer({ canvas })
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(window.devicePixelRatio)
+const canvas = document.querySelector(".webgl");
+const renderer = new THREE.WebGLRenderer({ canvas });
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(window.devicePixelRatio);
 
 // Orbit Controls
-const controls = new OrbitControls(camera, canvas)
+const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true
 controls.enablePan = false
 controls.enableZoom = false
