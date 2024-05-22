@@ -1,7 +1,6 @@
 import * as THREE from 'https://unpkg.com/three@0.164.1/build/three.module.js';
 import './style.css';
 import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js';
-import gsap from 'gsap';
 
 // Scene
 const scene = new THREE.Scene();
@@ -41,9 +40,7 @@ window.addEventListener('resize', () => {
 
   renderer.setSize(sizes.width, sizes.height)
 })
-const time = gsap.timeline({default: {duration: 1}})
-time.fromTo('nav', {y: "-100%"}, {y: "0%"})
-time.fromTo(".title", {opacity: 0}, {opacity: 1})
+
 // Lights
 const light = new THREE.PointLight("#ffffff", 60, 100, 1.3)
 light.position.set(0, 0, 10)
