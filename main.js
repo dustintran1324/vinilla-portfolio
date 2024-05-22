@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import './style.css'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js' // Import correct OrbitControls
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import gsap from "gsap"
 
 // Scene
@@ -13,7 +13,7 @@ const sizes = {
 }
 
 // Camera
-const camera = new THREE.PerspectiveCamera(30, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 20
 scene.add(camera)
 
@@ -21,7 +21,7 @@ scene.add(camera)
 const canvas = document.querySelector(".webgl")
 const renderer = new THREE.WebGLRenderer({ canvas })
 renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(window.devicePixelRatio) //This helps to clean the edge
+renderer.setPixelRatio(window.devicePixelRatio)
 
 // Orbit Controls
 const controls = new OrbitControls(camera, canvas)
@@ -41,19 +41,17 @@ window.addEventListener('resize', () => {
 
   renderer.setSize(sizes.width, sizes.height)
 })
-
+const time = gsap.timeline({default: {duration: 1}})
+time.fromTo('nav', {y: "-100%"}, {y: "0%"})
+time.fromTo(".title", {opacity: 0}, {opacity: 1})
 // Lights
-const light = new THREE.PointLight("#ffffff", 60 , 100, 1.3)
-light.position.set(0, 10, 10)
-light.castShadow = true
+const light = new THREE.PointLight("#ffffff", 60, 100, 1.3)
+light.position.set(0, 0, 10)
 scene.add(light)
-light.shadow.mapSize.width = 512; // default
-light.shadow.mapSize.height = 512; // default
-light.shadow.camera.near = 0.5; // default
-light.shadow.camera.far = 500;
+
 // Create Sphere for Light Source
-const lightSphereGeometry = new THREE.SphereGeometry(0.5, 64, 64)
-const lightSphereMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' , roughness: 0.2})
+const lightSphereGeometry = new THREE.SphereGeometry(4, 32, 32)
+const lightSphereMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff' })
 const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial)
 lightSphere.position.copy(light.position)
 scene.add(lightSphere)
@@ -63,8 +61,8 @@ const sphereCount = 5 // Number of spheres
 const spheres = []
 
 for (let i = 0; i < sphereCount; i++) {
-  const radius = Math.random()*2 + 1; // Random radius between 1 and 3
-  const geometry = new THREE.SphereGeometry(radius, 32, 32)
+  const radius = Math.random() * 2 + 1; // Random radius between 1 and 3
+  const geometry = new THREE.SphereGeometry(radius, 64, 64)
   const material = new THREE.MeshStandardMaterial({
     color: "#00ff83",
     roughness: 0.5
@@ -74,7 +72,7 @@ for (let i = 0; i < sphereCount; i++) {
   // Position each sphere at different locations in the scene
   mesh.position.x = Math.random() * 20 - 10
   mesh.position.y = Math.random() * 20 - 10
-  mesh.position.z = Math.random() * 0 - 10
+  mesh.position.z = Math.random() * 20 - 10
   
   scene.add(mesh)
   spheres.push(mesh)
@@ -102,9 +100,11 @@ window.addEventListener('mousemove', (e) => {
 // Animation Loop
 const animate = () => {
   controls.update()
-  lightSphere.position.copy(light.position) // Update position of light sphere to match light
   renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
 
 animate()
+controls.addEventListener('change', () => {
+  lightSphere.rotation.copy(scene.rotation)
+})

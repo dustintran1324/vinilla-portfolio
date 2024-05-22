@@ -2,9 +2,13 @@
   margin: 0;;
   padding: 0;
   box-sizing: border-box;
+
 }
 body,html{
   overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 .webgl{
   position: absolute;
@@ -34,7 +38,7 @@ nav ul{
   color: white;
   z-index: 2;
   position: absolute;
-  font-size: 3rem;
+  font-size: 6rem;
   left: 50%;
   top: 75%;
   transform: translate(-50%, -75%);
